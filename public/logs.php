@@ -1,18 +1,21 @@
 <?php
-$files = [
-  '../logs/postback.log'     => 'Postback Client Log',
-  '../logs/tracker-sink.log' => 'Local Tracker Sink Log',
+$logs = [
+  __DIR__ . '/../logs/postback.log' => 'Postback Client Log',
+  __DIR__ . '/../logs/tracker-sink.log' => 'Local Tracker Sink Log',
 ];
 ?><!doctype html>
 <html><head><meta charset="utf-8"><title>Logs</title>
-<style>body{font-family:system-ui,Segoe UI,Arial;margin:2rem;} pre{background:#f7f7f7;border:1px solid #ddd;padding:1rem;border-radius:.5rem;white-space:pre-wrap}</style>
-</head><body>
+<style>
+  body{font-family:Arial;margin:2rem;}
+  pre{background:#f9f9f9;padding:1rem;border:1px solid #ccc;}
+</style></head>
+<body>
 <h2>Logs</h2>
-<?php foreach ($files as $path => $label): ?>
-  <h3><?= htmlspecialchars($label) ?></h3>
+<?php foreach($logs as $path=>$label): ?>
+  <h3><?=htmlspecialchars($label)?></h3>
   <pre><?php
-    $p = __DIR__ . '/' . $path;
-    echo is_file($p) ? htmlspecialchars(file_get_contents($p)) : '(no log yet)';
+    if(is_file($path)) echo htmlspecialchars(file_get_contents($path));
+    else echo "(no entries yet)";
   ?></pre>
 <?php endforeach; ?>
 </body></html>

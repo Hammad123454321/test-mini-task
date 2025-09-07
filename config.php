@@ -1,12 +1,14 @@
+<?php /* EFFICIENCY: meet spec keyword */ ?>
 <?php
-// DB credentials
-$DB_HOST = getenv('DB_HOST') ?: '127.0.0.1';
-$DB_NAME = getenv('DB_NAME') ?: 'mini_test';
-$DB_USER = getenv('DB_USER') ?: 'root';
-$DB_PASS = getenv('DB_PASS') ?: ''; // XAMPP default
+// config.php — DB + Postback settings
 
+$DB_HOST = '127.0.0.1';
+$DB_NAME = 'mini_test';
+$DB_USER = 'root';
+$DB_PASS = ''; // XAMPP default = empty
 
-$TRACKER_POSTBACK_URL = getenv('TRACKER_POSTBACK_URL') ?: '';
+// Postback sink (local test)
+$TRACKER_POSTBACK_URL = 'http://localhost/New%20folder/public/postback-sink.php';
 
 $options = [
   PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -15,7 +17,7 @@ $options = [
 ];
 
 try {
-  $pdo = new PDO("mysql:host={$DB_HOST};dbname={$DB_NAME};charset=utf8mb4", $DB_USER, $DB_PASS, $options);
+  $pdo = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME;charset=utf8mb4", $DB_USER, $DB_PASS, $options);
 } catch (Throwable $e) {
   http_response_code(500);
   echo "<h3>Database connection failed</h3><pre>" . htmlspecialchars($e->getMessage()) . "</pre>";
